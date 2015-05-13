@@ -48,7 +48,7 @@ public class MultiTasksExecutor {
 
 	private void executeAsyn() throws InterruptedException {
 		ExecutorService exec = Executors.newFixedThreadPool(size);
-		for(Task t : tasks){
+		for (Task t : tasks) {
 			t.setCount(count);
 			exec.execute(t);
 		}
@@ -60,7 +60,7 @@ public class MultiTasksExecutor {
 
 	private void executeSyn() {
 
-		for(Task t : tasks){
+		for (Task t : tasks) {
 			t.execute();
 		}
 	}
