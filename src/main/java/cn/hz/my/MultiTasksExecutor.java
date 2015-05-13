@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 public class MultiTasksExecutor {
 
 	private boolean isAsyn = true; // 是否异步执行
-	private boolean awaitComplete = true; // 是否等待执行完成,当异步执行时起作用
 	private int size; // 任务数
 	private Set<Task> tasks;
 	private CountDownLatch count;
@@ -22,7 +21,6 @@ public class MultiTasksExecutor {
 	public MultiTasksExecutor(Set<Task> tasks, boolean isAsyn,
 			boolean awaitComplete) {
 		this.isAsyn = isAsyn;
-		this.awaitComplete = awaitComplete;
 		this.size = tasks.size();
 		this.tasks = tasks;
 		if (isAsyn && awaitComplete) {
@@ -70,7 +68,6 @@ public class MultiTasksExecutor {
 	}
 
 	public synchronized void setAwaitComplete(boolean awaitComplete) {
-		this.awaitComplete = awaitComplete;
 	}
 
 
