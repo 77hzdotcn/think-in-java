@@ -64,6 +64,15 @@ public class MultiTasksExecutor {
 			t.execute();
 		}
 	}
+	
+	public synchronized void setAsyn(boolean isAsyn) {
+		this.isAsyn = isAsyn;
+	}
+
+	public synchronized void setAwaitComplete(boolean awaitComplete) {
+		this.awaitComplete = awaitComplete;
+	}
+
 
 	public static abstract class Task<V> implements Runnable {
 
