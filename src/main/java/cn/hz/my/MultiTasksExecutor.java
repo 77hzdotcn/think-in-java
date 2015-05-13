@@ -38,7 +38,7 @@ public class MultiTasksExecutor {
 		this(tasks, true);
 	}
 
-	public void execute() throws InterruptedException {
+	public synchronized void execute() throws InterruptedException {
 		if (isAsyn) {
 			executeAsyn();
 		} else {
