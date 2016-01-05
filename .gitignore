@@ -1,2 +1,6 @@
 /bin/
 /target/
+/.settings/
+/.idea/
+.classpath
+.DS_Store
