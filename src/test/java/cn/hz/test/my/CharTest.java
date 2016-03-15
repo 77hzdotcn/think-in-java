@@ -6,11 +6,10 @@ import java.io.InputStreamReader;
 public class CharTest {
 
 	public static void main(String[] args) throws IOException {
-		InputStreamReader in = new InputStreamReader(System.in);
-		int ch = in.read();
-		System.out.println(ch);
-		System.out.println(in.getEncoding());
-		System.out.println((char)ch);
+		String s = new String();
+		for(int i = 0; i < 10000; i++){
+			s = s + i;
+		}
 
 	}
 
