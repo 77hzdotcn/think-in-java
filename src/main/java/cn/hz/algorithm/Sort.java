@@ -8,19 +8,40 @@ package cn.hz.algorithm;
  */
 public class Sort {
 
+	public static void insert(int[] arr) {
+		int length = arr.length;
+		for (int i = 1; i < length; i++) {
+			int num = arr[i];
+			int m = i;
+			while (m >= 1 && num < arr[m - 1]) {
+				arr[m] = arr[m - 1];
+				m--;
+			}
+			arr[m] = num;
+		}
+
+	}
+
 	/**
 	 * 冒泡
 	 * 
 	 * @param arr
 	 */
 	public static void bubble(int[] arr) {
+		boolean flag = true; // 针对已排序数列做优化
 		for (int i = 0, l = arr.length - 1; i < l; i++) {
-			for (int j = 0; j < l - i; j++) {
-				if (arr[j] > arr[j + 1]) {
-					int temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
+			if (flag) {
+				for (int j = 0; j < l - i; j++) {
+					flag = false;
+					if (arr[j] > arr[j + 1]) {
+						int temp = arr[j];
+						arr[j] = arr[j + 1];
+						arr[j + 1] = temp;
+						flag = true;
+					}
 				}
+			} else {
+				break;
 			}
 		}
 	}
@@ -40,7 +61,25 @@ public class Sort {
 	 * @param arr
 	 */
 	public static void merge(int[] arr) {
-		new QuickSorter(arr).sort();
+		merge(arr, 0, arr.length - 1);
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @param start
+	 *            开始下标
+	 * @param end
+	 *            结束下标
+	 */
+	public static void merge(int[] arr, int start, int end) {
+		if (start < end) {
+			int half = (start + end) / 2;
+			merge(arr, start, half);
+			merge(arr, half + 1, end);
+			_merge(arr, start, half, end);
+		}
+
 	}
 
 	static class QuickSorter {
@@ -130,6 +169,35 @@ public class Sort {
 		public void sort() {
 			recursiveSort(0, arr.length - 1);
 		}
+	}
+
+	private static void _merge(int[] arr, int p, int q, int r) {
+		int ll = q - p + 1;
+		int lr = r - q;
+		int[] larr = new int[ll + 1];
+		int[] rarr = new int[lr + 1];
+		for (int i = 0; i < ll; i++) {
+			larr[i] = arr[i + p];
+		}
+		for (int i = 0; i < lr; i++) {
+			rarr[i] = arr[i + q + 1];
+		}
+		larr[ll] = Integer.MAX_VALUE;
+		rarr[lr] = Integer.MAX_VALUE;
+		int lpoint = 0;
+		int rpoint = 0;
+		for (int i = 0; i < r - p + 1; i++) {
+			int le = larr[lpoint];
+			int re = rarr[rpoint];
+			if (le <= re) {
+				arr[p + i] = le;
+				lpoint++;
+			} else {
+				arr[p + i] = re;
+				rpoint++;
+			}
+		}
+
 	}
 
 }
