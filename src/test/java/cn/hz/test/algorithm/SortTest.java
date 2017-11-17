@@ -16,7 +16,7 @@ public class SortTest {
 	@Before
 	public void init() {
 		Random r = new Random();
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < arr.length; i++) {
 			arr[i] = r.nextInt(100);
 		}
 		System.out.print("init : ");
@@ -42,6 +42,13 @@ public class SortTest {
 	public void merge() {
 		Sort.merge(arr);
 		System.out.print("merge : ");
+		print();
+	}
+
+	@Test
+	public void heapSort() {
+		Sort.heapSort(arr);
+		System.out.print("heapSort : ");
 		print();
 	}
 

@@ -8,6 +8,11 @@ package cn.hz.algorithm;
  */
 public class Sort {
 
+	/**
+	 * 插入排序
+	 * 
+	 * @param arr
+	 */
 	public static void insert(int[] arr) {
 		int length = arr.length;
 		for (int i = 1; i < length; i++) {
@@ -51,8 +56,60 @@ public class Sort {
 	 * 
 	 * @param arr
 	 */
-	public static void quick(int[] arr) {
+	public static void quick1(int[] arr) {
 		new QuickSorter(arr).sort();
+	}
+
+	/**
+	 * 快速排序
+	 * 
+	 * @param arr
+	 */
+	public static void quick(int[] arr) {
+		_quick(arr, 0, arr.length - 1);
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @param p
+	 *            起点序号
+	 * @param r
+	 *            终点序号
+	 */
+	private static void _quick(int[] arr, int p, int r) {
+		if (p < r) {
+			int q = partition(arr, p, r);
+			_quick(arr, p, q - 1);
+			_quick(arr, q + 1, r);
+		}
+	}
+
+	private static int partition(int[] arr, int p, int r) {
+		// 快速排序分解阶段分解为四个部分:
+		// 比x小的部分 : [p, i -1]
+		// 比x大的部分 : [i, j - 1]
+		// 未处理的部分: [j, r -1]
+		// x部分:x
+		int x = arr[r];
+		int i = p; // i指比x大的部分的第一个元素
+		for (int j = p; j < r; j++) {
+			if (arr[j] <= x) {
+				swap(arr, i, j);
+				i++;
+			}
+		}
+		swap(arr, i, r);
+		return i;
+	}
+
+	private static void swap(int[] arr, int i, int j) {
+		if (i == j) {
+			return;
+		}
+		int tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
 	}
 
 	/**
@@ -80,6 +137,56 @@ public class Sort {
 			_merge(arr, start, half, end);
 		}
 
+	}
+
+	public static void heapSort(int[] arr) {
+		buildHeap(arr);
+		for (int i = arr.length - 1; i > 0; i--) {
+			int max = arr[0];
+			arr[0] = arr[i];
+			arr[i] = max;
+			maxHeapFy(arr, 0, i);
+		}
+	}
+
+    /**
+     * 建堆,从非叶子节点开始维护堆的性质
+     * @param arr
+     */
+	private static void buildHeap(int[] arr) {
+		int m = arr.length / 2;
+		for (int i = m - 1; i >= 0; i--) {
+			maxHeapFy(arr, i, arr.length);
+		}
+
+	}
+
+    /**
+     * 维护堆的性质
+     * @param arr
+     * @param targetIndex
+     * @param heapSize
+     */
+	private static void maxHeapFy(int[] arr, int targetIndex, int heapSize) {
+		int target = arr[targetIndex];
+		int idxLeft = (targetIndex << 1) + 1;
+		int idxRight = (targetIndex + 1) << 1;
+
+		int larger;
+		if (idxLeft < heapSize && arr[idxLeft] > target) {
+			larger = idxLeft;
+		} else {
+			larger = targetIndex;
+		}
+		if (idxRight < heapSize && arr[idxRight] > arr[larger]) {
+			larger = idxRight;
+		}
+		if (larger != targetIndex) {
+			int tmp = arr[targetIndex];
+			arr[targetIndex] = arr[larger];
+			arr[larger] = tmp;
+			maxHeapFy(arr, larger, heapSize);
+		}
 	}
 
 	static class QuickSorter {
